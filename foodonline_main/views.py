@@ -2,4 +2,4 @@ from django.shortcuts import render
 from django.http import request, HttpResponse
 
 def home(request):
-    return HttpResponse('ss')
+    return render (request, 'home.html')
