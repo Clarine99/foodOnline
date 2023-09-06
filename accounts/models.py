@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager 
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
 # Create your models here.
 
 class UserManager (BaseUserManager):
@@ -10,9 +12,10 @@ class UserManager (BaseUserManager):
             raise ValueError('User must have a username')
         
         user = self.model(
-            self.normalize_email(email),
+            email = self.normalize_email(email),
             first_name = first_name,
-            last_name = last_name
+            last_name = last_name,
+            username = username
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -65,8 +68,49 @@ class User(AbstractBaseUser):
     def __str__(self) -> str:
         return self.email
     
-    def has_perms (self, perm, obj=None):
+    def has_perm (self, perm, obj=None):
         return self.is_admin
     
     def has_module_perms(self, app_label):
         return True
+    
+class UserProfile (models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    profile_pic = models.ImageField(upload_to='users/profile_pictures', blank=True, null=True)
+    cover_photo = models.ImageField(upload_to='users/cover_photos', blank=True, null=True)
+    address_line1 = models.CharField(max_length=50, blank=True, null=True)
+    address_line2 = models.CharField(max_length=50, blank=True, null=True)
+    country = models.CharField(max_length=50, blank=True, null=True)
+    state = models.CharField(max_length=15, blank=True, null=True)
+    city = models.CharField(max_length=50, blank=True, null=True)
+    pin_code = models.CharField(max_length=6, blank=True, null=True)
+    longitude = models.CharField(max_length=50, blank=True, null=True)
+    latitude = models.CharField(max_length=50, blank=True, null=True)
+    latitude = models.CharField(max_length=50, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.user.email
+
+
+# @receiver(post_save,sender=User)   
+# def created_user_profile_receiver (sender, instance, created, **kwargs):
+#     print("kk",created)
+#     if created:
+#         UserProfile.objects.create(user=instance)
+#         print('user profile is created')
+#     else:
+#         try:
+#             user_profile = UserProfile.objects.get(user=instance)
+#             print("klkl",user_profile)
+#             user_profile.save()
+#         except:
+#             print('jsdkfj')
+#             UserProfile.objects.create(user=instance)
+            
+            
+
+
+# post_save(created_user_profile_receiver, User)
+
