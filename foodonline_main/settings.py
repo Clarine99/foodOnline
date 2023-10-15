@@ -123,6 +123,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR /"media"
 STATICFILES_DIRS = [
    BASE_DIR / "foodonline_main" / "media",
+   BASE_DIR / "vendor" / "license"
    
 ]
 
@@ -152,3 +153,18 @@ MESSAGE_TAGS = {
     messages.ERROR: "danger",
     
 }
+
+
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+
+# EMAIL_HOST='smtp.gmail.com'
+# EMAIL_PORT = config('EMAIL_PORT', cast=int)
+# print(EMAIL_PORT)
+# # EMAIL_PORT=587
+# EMAIL_HOST_USER='dericaku.id@gmail.com'
+# EMAIL_HOST_PASSWORD='rugjnnhoogzhtivy'
+# EMAIL_USE_TLS = True
