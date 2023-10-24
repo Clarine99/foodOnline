@@ -7,14 +7,16 @@ def created_user_profile_receiver (sender, instance, created, **kwargs):
     print("kk",created)
     if created:
         UserProfile.objects.create(user=instance)
-        print('user profile is created')
+        print('user profile is created, look in signals.py')
     else:
         try:
             user_profile = UserProfile.objects.get(user=instance)
             print(user_profile)
             
             user_profile.save()
+            print('aftersaveeee')
         except:
             print('jsdkfj')
             UserProfile.objects.create(user=instance)
+            print('signalss, except, create user profile.....')
 

@@ -10,6 +10,8 @@ from .utils import detectUser, send_email_verification
 from django.core.exceptions import PermissionDenied
 from django.utils.http import urlsafe_base64_decode
 
+from vendor.models import Vendors
+
 # Create your views here.
 
 # Restrict the vendor from  accessing vendor page
@@ -176,14 +178,18 @@ def custDashboard(request):
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def vendorDashboard(request):
-    return render(request, 'accounts/vendorDashboard.html')
+    vendor = Vendors.objects.get(user=request.user)
+    context = {
+        'vendor' : vendor,
+    }
+    return render(request, 'accounts/vendorDashboard.html', context)
 
 def forgot_password(request):
     if request.method == 'POST':
         email = request.POST['email']
         if User.objects.filter(email=email).exists():
             user = User.objects.get(email__exact=email)
-            print('ini di forgot password', user)
+            print('This in forgot password', user)
             email_subject = "Reset Password"
             email_template = 'accounts/emails/reset_password_email.html'
             send_email_verification(request, user, email_subject, email_template)
@@ -215,4 +221,20 @@ def reset_password_validate(request,uidb64, token):
     return 
     
 def reset_password (request):
+    if request.method == "POST":
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        print('rtrtrt', confirm_password)
+        if password == confirm_password:
+            pk = request.session.get('uid')
+            print('hahahaha', pk)
+            user = User.objects.get(pk=pk)
+            user.set_password(password)
+            user.is_active = True
+            user.save()
+            messages.success(request,'Password succesfully reset')
+            return redirect ('login')
+        else:
+            messages.error(request,"password doesn't not match")
+            return redirect ('reset_password')
     return render (request, "accounts/reset_password.html")

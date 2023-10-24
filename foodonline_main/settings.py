@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'accounts.context_processors.get_vendor',
             ],
         },
     },
@@ -160,11 +161,5 @@ EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'foodonline Marketplace <dericaku.id@gmail.com>'
 
-# EMAIL_HOST='smtp.gmail.com'
-# EMAIL_PORT = config('EMAIL_PORT', cast=int)
-# print(EMAIL_PORT)
-# # EMAIL_PORT=587
-# EMAIL_HOST_USER='dericaku.id@gmail.com'
-# EMAIL_HOST_PASSWORD='rugjnnhoogzhtivy'
-# EMAIL_USE_TLS = True
