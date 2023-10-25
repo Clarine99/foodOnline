@@ -6,4 +6,5 @@ urlpatterns = [
     path('', AccountViews.vendorDashboard, name = 'vendor'),
     path('profile', views.vprofile, name='vprofile'),
     
+    
 ]
