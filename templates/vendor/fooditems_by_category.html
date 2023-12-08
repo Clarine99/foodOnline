@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Main Section Start -->
+<div class="main-section">
+    
+      {% include 'include/cover.html' %} 
+    </div>
+    <div class="page-section account-header buyer-logged-in">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                   <!--  Load Sidebar -->
+                   {% include 'include/v_sidebar.html' %}
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div class="user-dashboard loader-holder">
+                        <div class="user-holder">
+                            <h5 class="text-uppercase">Build Your Menu</h5>
+                            <hr>
+                            <button class="btn btn-light" onclick="history.back()"><i class="fa-solid fa-backward"></i></button>
+                            <h6>Category : <span class="text-uppercase text-success"> {{ categories }}</span> </h6>
+                            <!-- Menu Builder Form Start -->
+                            
+                            
+                            <table class=" table table-borderless table-condensed table-hover">
+                              <tbody>
+                                
+                                
+                                {% if food_items %}
+                                <h1>true</h1>
+                                {% for food in food_items %}
+                               
+                                  <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><img src="{{ food.image.url }}" alt="" style="width:9em;height:auto;""></td>
+                                    <td><a href=""> <p class="mb-0 fw-bold" >{{food}}  </p> </td>
+                                      
+                                      
+                                  
+                                    <td> <a href="{% url 'edit_food' food.id %}"><i class="fa-solid fa-pencil"></i></a> &nbsp; <a href="{% url 'delete_food' food.id %}" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-trash" aria-hidden="true" style="color:red;"></i></a> </td>
+                                    {% if food.is_available %}
+                                    <td>
+                                      <span class="badge bg-secondary"> ada
+                                        </span>
+                                      </td>
+                                      {% else %}
+                                      <td>
+                                      <span class="badge bg-secondary"> Habis </span>
+                                    </td>
+                                      {% endif %}
+                                          <small class="text-muted">{{ food.description }}</small>    
+                                        </tr>
+                                {% endfor %}
+                                {% else %}
+                                
+                                <h5 class="text-center">No Food</h5>
+                                <div class="text-center">
+                                  <a href="{% url 'add_category' %}" type="button" class="btn btn-success"><i class=" fa fa-plus"></i> &nbsp; Add Food</a>
+                                </div>
+                                
+                                {% endif %}
+                                
+                              </tbody>
+                            </table>
+									
+									<!-- Menu Builder Form End -->
+
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Section End -->
+{% include 'include/alerts.html' }
+
+
+{% endblock %}

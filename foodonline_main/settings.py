@@ -40,16 +40,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'vendor',
+    'menu',
+    
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'foodonline_main.urls'
@@ -165,4 +169,9 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'foodonline Marketplace <dericaku.id@gmail.com>'
 
 GOOGLE_API_KEY = config('GOOGLE_API_KEY')
+
+# SESSION TIMEOUT
+SESSION_EXPIRE_SECONDS = 1800
+SESSION_TIMEOUT_REDIRECT = 'accounts/login.html/' 
+SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 
