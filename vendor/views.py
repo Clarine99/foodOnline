@@ -19,16 +19,21 @@ def get_vendor(request):
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def vprofile(request):
+    print('asasasa')
+    print(request.POST)
     profile = get_object_or_404(UserProfile, user= request.user)
     vendor = get_object_or_404(Vendors, user= request.user)
-
+    print(request.method)
     if request.method == "POST":
+        print(request.POST)
+        print("postttttttttttttt")
         profile_form = UserProfileForm(request.POST, request.FILES, instance=profile)
         vendor_form = VendorForms(request.POST, request.FILES, instance=vendor)
         if profile_form.is_valid() and vendor_form.is_valid():
             profile_form.save()
             vendor_form.save()
             
+            print('updatedd SUKSESSSSSS')
             messages.success(request, 'Settings Updated')
             return redirect ('vprofile')
         else:
@@ -37,7 +42,7 @@ def vprofile(request):
     else:
         profile_form = UserProfileForm(instance=profile)
         vendor_form = VendorForms(instance=vendor)
-
+        print('updatedd kkkkk')
     context = {
         'profile_form':profile_form,
         'vendor_form':vendor_form,

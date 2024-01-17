@@ -9,6 +9,7 @@ from vendor.forms import VendorForms
 from .utils import detectUser, send_email_verification
 from django.core.exceptions import PermissionDenied
 from django.utils.http import urlsafe_base64_decode
+from django.template.defaultfilters import slugify
 
 from vendor.models import Vendors
 
@@ -83,6 +84,7 @@ def registerVendor (request):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             username = form.cleaned_data['username']
+            
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = User.objects.create_user(first_name=first_name, last_name=last_name,username=username,email=email,password=password)
@@ -90,6 +92,8 @@ def registerVendor (request):
             user.save()
             vendor = v_forms.save(commit=False)
             vendor.user = user 
+            vendor_name = v_forms.cleaned_data['vendor_name'] 
+            vendor.vendor_slug = slugify(vendor_name)+'_'+str(user.id)
             user_profile = UserProfile.objects.get(user=user)
             vendor.user_profile = user_profile
             vendor.save()

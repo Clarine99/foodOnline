@@ -18,6 +18,7 @@
                         <div class="user-holder">
                             <h5 class="text-uppercase">Manage Your Restaurant</h5>
                             <!-- My Restaurants Form Start -->
+							
 									<form action="{% url 'vprofile' %}" method="POST" enctype="multipart/form-data">
 										{% csrf_token %}
 										<div class="form-fields-set">
@@ -161,7 +162,25 @@
 											<div>
 												<div class="field-holder">
 													<div class="payment-holder input-button-loader">
-														<input class="update-restaurant" type="submit" value="Update Restaurant" onclick="location.href='restaurant-location.html';">
+														{% for fields in profile_form %}
+														
+														{% if fields.errors %}	
+															{% for field in fields %}
+															<li style="color:red;">{{ fields.errors }}</li>
+															{% endfor %}
+														{% endif %}
+														{% endfor %}
+														
+														{% for field in vendor_form %}
+														{% if field.errors %}	
+														{% for field in fields %}
+															<li>{{field.errors}}</li>
+															{% endfor %}	
+															
+														{% endif %}
+														{% endfor %}
+														<input  type="submit" value="Update Restaurant">
+														
 													</div>
 												</div>
 											</div>
@@ -179,7 +198,7 @@
     </div>
 </div>
 <!-- Main Section End -->
-{% include 'include/alerts.html' }
+{% include 'include/alerts.html' %}
 
 
 {% endblock %}
