@@ -4,7 +4,7 @@ from vendor.models import Vendors
 # Create your models here.
 class Category(models.Model):
     vendor = models.ForeignKey(Vendors, on_delete=models.CASCADE)
-    category_name = models.CharField(max_length=150, unique=True,)
+    category_name = models.CharField(max_length=150)
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(max_length=250,blank=True)
     created_at = models.DateTimeField(auto_now=True)

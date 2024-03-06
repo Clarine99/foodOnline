@@ -32,8 +32,8 @@ function onPlaceChanged (){
         if (status === google.maps.GeocoderStatus.OK){
             var latitude = results[0].geometry.location.lat();
             var longitude = results[0].geometry.location.lng();
-            // console.log('lat=>',latitude);
-            // console.log('lng=>',longitude);
+            console.log('lat=>',latitude);
+            console.log('lng=>',longitude);
 
             $('#id_longitude').val(longitude);
             $('#id_latitude').val(latitude);

@@ -24,18 +24,23 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="{% static 'foodOnline_template/assets/js/modernizr.js' %}"></script>
 	<script src="{% static 'foodOnline_template/assets/js/bootstrap.js' %}"></script>
+
+	{% if '/vendor/profile' or '/' in request.path %}
+	
+	<script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places&callback=initAutoComplete"  defer></script>
+	{% endif %}
 	
 	<link href="{% static 'foodOnline_template/assets/css/custom.css' %}" rel="stylesheet" >
-
-	{% if '/profile/' in request.GET %}
-	<script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places&callback=initAutoComplete" async defer></script>
-	{% endif %}
-	<script src="{% static 'foodOnline_template/assets/js/custom.js' %}"></script>
+	<script>console.log('{{request.path}}')</script>
+	
+	<!-- <script src="{% static 'foodOnline_template/assets/js/custom.js' %}"></script> -->
+	<!-- <script src="{% static 'foodOnline_template/assets/js/custom.js' %}"></script> -->
 	<script src="https://kit.fontawesome.com/cad049f079.js" crossorigin="anonymous"></script>
 	
 </head>
 
 <body>
+	
 <!-- Load Navbar Her -->
 {% include 'include/navbar.html' %}
 <!-- Load Content Here -->

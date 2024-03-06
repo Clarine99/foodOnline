@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 print('dirrrrrr', BASE_DIR)
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'vendor',
     'menu',
     'marketplace',
+    'django.contrib.gis',
     
 ]
 
@@ -87,7 +89,8 @@ WSGI_APPLICATION = 'foodonline_main.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': config('DB_NAME', default='default_name'),
         'USER' : config('DB_USER'),
         'PASSWORD':config('DB_PASSWORD'),
@@ -178,3 +181,7 @@ SESSION_EXPIRE_SECONDS = 1800
 SESSION_TIMEOUT_REDIRECT = 'accounts/login.html/' 
 SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 
+
+os.environ['PATH'] = os.path.join(BASE_DIR, 'env1\Lib\site-packages\osgeo') + ';' + os.environ['PATH']
+os.environ['PROJ_LIB'] = os.path.join(BASE_DIR, 'env1\Lib\site-packages\osgeo\data\proj') + ';' + os.environ['PATH']
+GDAL_LIBRARY_PATH = os.path.join(BASE_DIR, 'env1\Lib\site-packages\osgeo\gdal.dll')
